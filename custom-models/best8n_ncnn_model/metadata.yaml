@@ -1,0 +1,17 @@
+description: Ultralytics best8n model trained on /content/Doors_noDoorHandleClass-2/data.yaml
+author: Ultralytics
+date: '2024-05-14T20:33:15.174546'
+version: 8.2.10
+license: AGPL-3.0 License (https://ultralytics.com/license)
+docs: https://docs.ultralytics.com
+stride: 32
+task: detect
+batch: 1
+imgsz:
+- 640
+- 640
+names:
+  0: door
+  1: hinged
+  2: knob
+  3: lever
