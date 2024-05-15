@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Client Test</title>
+</head>
+<body>
+    <h1>WebSocket Client Test</h1>
+    <button id="WalkingButton">Walking</button>
+    <button id="MathButton">Maths</button>
+    <button id="startWalkingButton">Start Walking</button>
+    <button id="stopWalkingButton">Stop Walking</button>
+    <button id="startMathButton">Start Math</button>
+    <button id="stopMathButton">Stop Math</button>
+
+    <script>
+        const ws = new WebSocket('ws://localhost:9002');
+
+        ws.onopen = () => {
+            console.log('WebSocket connected');
+        };
+
+        ws.onmessage = (event) => {
+            console.log('Message received:', event.data);
+        };
+
+        ws.onclose = () => {
+            console.log('WebSocket disconnected');
+        };
+
+        document.getElementById('startWalkingButton').addEventListener('click', () => {
+            const message = {
+                mode: 'walking',
+                command: 'start',
+            };
+            ws.send(JSON.stringify(message));
+            console.log('Sent message:', message);
+        });
+
+        document.getElementById('stopWalkingButton').addEventListener('click', () => {
+            const message = {
+                mode: 'walking',
+                command: 'stop',
+            };
+            ws.send(JSON.stringify(message));
+            console.log('Sent message:', message);
+        });
+        document.getElementById('WalkingButton').addEventListener('click', () => {
+            const message = {
+                mode: 'walking',
+            };
+            ws.send(JSON.stringify(message));
+            console.log('Sent message:', message);
+        });
+
+        document.getElementById('startMathButton').addEventListener('click', () => {
+            const message = {
+                mode: 'math',
+                command: 'start',
+            };
+            ws.send(JSON.stringify(message));
+            console.log('Sent message:', message);
+        });
+        document.getElementById('MathButton').addEventListener('click', () => {
+            const message = {
+                mode: 'math',
+            };
+            ws.send(JSON.stringify(message));
+            console.log('Sent message:', message);
+        });
+
+        document.getElementById('stopMathButton').addEventListener('click', () => {
+            const message = {
+                mode: 'math',
+                command: 'stop',
+            };
+            ws.send(JSON.stringify(message));
+            console.log('Sent message:', message);
+        });
+    </script>
+</body>
+</html>
