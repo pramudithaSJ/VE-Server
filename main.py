@@ -3,12 +3,12 @@ import threading
 import logging
 from websocket_server import WebsocketServer
 from walkingServer import WalkingServer
-from mathServer import mathDetectionServer
+from mathServer import MathDetectionServer
 
 class MainServer:
     def __init__(self, host='0.0.0.0', port=9002):
         self.detection_server = WalkingServer()
-        self.math_detection_server = mathDetectionServer()
+        self.math_detection_server = MathDetectionServer()
         self.server = WebsocketServer(host=host, port=port)
         self.server.set_fn_new_client(self.new_client)
         self.server.set_fn_client_left(self.client_left)
