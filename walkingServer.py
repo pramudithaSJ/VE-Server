@@ -61,6 +61,9 @@ class WalkingServer:
         if self.thread is not None:
             self.thread.join()
         self.release_resources()
+        # Send stop message to client
+        stop_message = {"type": "info", "message": "Detection stopped"}
+        self.server.send_message(self.client, json.dumps(stop_message))
 
     def release_resources(self):
         if self.cap and self.cap.isOpened():
