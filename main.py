@@ -5,10 +5,12 @@ from websocket_server import WebsocketServer
 from walkingServer import WalkingServer
 from mathServer import MathDetectionServer
 from activityServer import ActivityServer
+from scienceServer import ScienceDetectionServer
 class MainServer:
     def __init__(self, host='0.0.0.0', port=9002):
         self.detection_server = WalkingServer()
         self.math_detection_server = MathDetectionServer()
+        self.science_detection_server = ScienceDetectionServer()
         self.activity_server = ActivityServer()
         self.server = WebsocketServer(host=host, port=port)
         self.server.set_fn_new_client(self.new_client)
@@ -37,6 +39,8 @@ class MainServer:
                     self.math_detection_server.run(client=client, server=server, message=message)
                 elif payload['mode'] == 'activity':
                     self.activity_server.run(client=client, server=server, message=message)
+                elif payload['mode'] == 'science':
+                    self.science_detection_server.run(client=client, server=server, message=message)
 
         except Exception as e:
             logging.error(f"Error processing message from client {client['id']}: {str(e)}")

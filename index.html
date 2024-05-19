@@ -13,12 +13,14 @@
     <button id="stopWalkingButton">Stop Walking</button>
     <button id="startMathButton">Start Math</button>
     <button id="stopMathButton">Stop Math</button>
+    <button id="startScienceButton">Start Science</button>
+    <button id="stopScienceButton">Stop Science</button>
     <button id="startActivityButton">Start Acitivity</button>
     <button id="stopActivityButton">Stop Actitvity</button>
     <button id="finishedpActivityButton">Stop Activity</button>
 
     <script>
-        const ws = new WebSocket('ws://172.20.10.4:9002');
+        const ws = new WebSocket('ws://localhost:9002');
 
         ws.onopen = () => {
             console.log('WebSocket connected');
@@ -61,6 +63,22 @@
             const message = {
                 mode: 'math',
                 command: 'start',
+            };
+            ws.send(JSON.stringify(message));
+            console.log('Sent message:', message);
+        });
+        document.getElementById('startScienceButton').addEventListener('click', () => {
+            const message = {
+                mode: 'science',
+                command: 'start',
+            };
+            ws.send(JSON.stringify(message));
+            console.log('Sent message:', message);
+        });
+        document.getElementById('stopScienceButton').addEventListener('click', () => {
+            const message = {
+                mode: 'science',
+                command: 'stop',
             };
             ws.send(JSON.stringify(message));
             console.log('Sent message:', message);
