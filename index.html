@@ -18,10 +18,11 @@
     <button id="startActivityButton">Start Acitivity</button>
     <button id="stopActivityButton">Stop Actitvity</button>
     <button id="finishedpActivityButton">Stop Activity</button>
+    <button id="moneyButton">Money</button>
 
     <script>
-        const ws = new WebSocket('ws://172.20.10.4:9002');
-        // const ws = new WebSocket('ws://localhost:9002');
+        // const ws = new WebSocket('ws://172.20.10.4:9002');
+        const ws = new WebSocket('ws://localhost:9002');
 
         ws.onopen = () => {
             console.log('WebSocket connected');
@@ -86,7 +87,7 @@
         });
         document.getElementById('MathButton').addEventListener('click', () => {
             const message = {
-                mode: 'math',
+                mode: 'activity',
             };
             ws.send(JSON.stringify(message));
             console.log('Sent message:', message);
@@ -120,6 +121,14 @@
             const message = {
                 mode: 'activity',
                 command: 'finished',
+            };
+            ws.send(JSON.stringify(message));
+            console.log('Sent message:', message);
+        });
+        document.getElementById('moneyButton').addEventListener('click', () => {
+            const message = {
+                mode: 'money',
+                command: 'start',
             };
             ws.send(JSON.stringify(message));
             console.log('Sent message:', message);
