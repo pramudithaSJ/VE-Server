@@ -45,7 +45,7 @@ class ScienceDetectionServer:
         if success:
             results = self.yolo(frame)[0]
             detections = sv.Detections.from_ultralytics(results)  # Modify as needed
-            detections = detections[detections.confidence > 0.70]
+            detections = detections[detections.confidence > 0.3]
             print(detections)
             if  0 <len(detections) == 1:
                     labels = [

@@ -42,9 +42,9 @@ class MathDetectionServer:
         if success:
             results = self.yolo(frame)[0]
             detections = sv.Detections.from_ultralytics(results)  # Modify as needed
-            detections = detections[detections.confidence > 0.70]
+            detections = detections[detections.confidence > 0.30]
             print(detections)
-            if len(detections) > 0:
+            if len(detections) == 1:
                     labels = [
                             f"{class_name} {confidence:.2f}"
                             for class_name, confidence
