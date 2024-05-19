@@ -33,7 +33,7 @@ class MathDetectionServer:
 
     def initialize_resources(self):
         self.cap = cv2.VideoCapture(0)
-        self.yolo = YOLO("models/best150.pt")
+        self.yolo = YOLO("models/math-model.pt")
         logging.info("Detection resources initialized")
 
     def detect(self):
@@ -54,6 +54,7 @@ class MathDetectionServer:
                         labels = "cylinder"
                     elif detections[detections.class_id == 3]:
                         labels = "triangle"
+                    
                     detection_message = {"type": "detection", "message": "Object detected!", "detections": labels }
                     self.server.send_message(self.client, json.dumps(detection_message))
                     self.active = False  # Set active to False to stop detection
