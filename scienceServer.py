@@ -35,7 +35,7 @@ class ScienceDetectionServer:
 
     def initialize_resources(self):
         self.cap = cv2.VideoCapture(0)
-        self.yolo = YOLO("models/best65_ncnn_model")
+        self.yolo = YOLO("models/best65.pt")
         logging.info("Detection resources initialized")
 
     def detect(self):
@@ -47,7 +47,7 @@ class ScienceDetectionServer:
             detections = sv.Detections.from_ultralytics(results)  # Modify as needed
             detections = detections[detections.confidence > 0.70]
             print(detections)
-            if len(detections) > 0:
+            if  0 <len(detections) == 1:
                     labels = [
                             f"{class_name} {confidence:.2f}"
                             for class_name, confidence
