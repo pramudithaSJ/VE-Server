@@ -1,0 +1,26 @@
+description: Ultralytics best65 model trained on /content/ScienceObject02-1/data.yaml
+author: Ultralytics
+date: '2024-05-19T16:07:26.395583'
+version: 8.2.10
+license: AGPL-3.0 License (https://ultralytics.com/license)
+docs: https://docs.ultralytics.com
+stride: 32
+task: detect
+batch: 1
+imgsz:
+- 640
+- 640
+names:
+  0: Beaker
+  1: Burette
+  2: Conical Flask
+  3: Flat Bottom Flask
+  4: Funnel
+  5: Magnet
+  6: Magnifiers
+  7: Measuring Cylinder
+  8: Pipette
+  9: Reagent Bottle
+  10: Round Bottom Flask
+  11: Test Tube
+  12: Wash Bottle

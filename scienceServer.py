@@ -35,7 +35,7 @@ class ScienceDetectionServer:
 
     def initialize_resources(self):
         self.cap = cv2.VideoCapture(0)
-        self.yolo = YOLO("models/best65.pt")
+        self.yolo = YOLO("models/best65_ncnn_model")
         logging.info("Detection resources initialized")
 
     def detect(self):
