@@ -33,7 +33,7 @@ class MathDetectionServer:
 
     def initialize_resources(self):
         self.cap = cv2.VideoCapture(0)
-        self.yolo = YOLO("models/math-model.pt")
+        self.yolo = YOLO("models/best150.pt")
         logging.info("Detection resources initialized")
 
     def detect(self):
