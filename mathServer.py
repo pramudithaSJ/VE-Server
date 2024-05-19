@@ -45,12 +45,16 @@ class MathDetectionServer:
             detections = detections[detections.confidence > 0.30]
             print(detections)
             if len(detections) == 1:
-                    labels = [
-                            f"{class_name} {confidence:.2f}"
-                            for class_name, confidence
-                            in zip(detections['class_name'], detections.confidence)
-]
-                    detection_message = {"type": "detection", "message": "Object detected!", "detections": labels}
+                    labels = ""
+                    if detections[detections.class_id == 0]:
+                        labels = "circle"
+                    elif detections[detections.class_id == 1]:
+                        labels = "cube"
+                    elif detections[detections.class_id == 2]:
+                        labels = "cylinder"
+                    elif detections[detections.class_id == 3]:
+                        labels = "triangle"
+                    detection_message = {"type": "detection", "message": "Object detected!", "detections": labels }
                     self.server.send_message(self.client, json.dumps(detection_message))
                     self.active = False  # Set active to False to stop detection
                     break  # Exit the loop to end the thread
