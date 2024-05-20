@@ -4,7 +4,6 @@ import logging
 from websocket_server import WebsocketServer
 from walkingServer import WalkingServer
 from mathServer import MathDetectionServer
-from money_main import app
 from scienceServer import ScienceDetectionServer
 from activityServer import app
 
@@ -45,8 +44,7 @@ class MainServer:
                     self.science_detection_server.run(client=client, server=server, message=message)
                 elif payload['mode'] == 'activity':
                     self.activity_server.run()
-                elif payload['mode'] == 'money':
-                    self.money_server.run()
+                
 
         except Exception as e:
             logging.error(f"Error processing message from client {client['id']}: {str(e)}")
