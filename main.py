@@ -33,6 +33,7 @@ class MainServer:
         logging.info(f"Client disconnected: {client['id']}")
 
     def message_received(self, client, server, message):
+        print(message)
         try:
             payload = json.loads(message)
             if 'mode' in payload and client['id'] in self.clients:

@@ -5,9 +5,7 @@ from ultralytics import YOLO
 import supervision as sv
 from flask import Flask, request, jsonify
 import random
-
-
-
+from flask_cors import CORS
 
 def random_data1():
     price_array1 = [20,40,50,60,80,100,200]
@@ -44,6 +42,7 @@ def random_data3():
     
     
 app = Flask(__name__)
+CORS(app)
 
 class ActivityServer:
     def __init__(self):
@@ -231,4 +230,4 @@ def question():
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=8080)
