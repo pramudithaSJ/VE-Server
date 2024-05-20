@@ -53,7 +53,7 @@ class ActivityServer:
 
     def initialize_resources(self):
         self.cap = cv2.VideoCapture(0)
-        self.yolo = YOLO("models/money.pt")
+        self.model = YOLO("models/money.pt")
         logging.info("Detection resources initialized")
 
     def detect(self):
@@ -67,31 +67,22 @@ class ActivityServer:
                 self.release_resources()
                 return jsonify({"message": "Failed to read frame from camera"}), 500
 
-            results = self.yolo(frame)[0]
+            results = self.model(frame)
             logging.info(f"YOLO results: {results}")
-            detections = sv.Detections.from_ultralytics(results)
-            logging.info(f"Detections: {detections}")
-            detections = detections[detections.confidence > 0.70]
 
-            if len(detections) > 0:
+            detections = results[0].boxes
+            high_conf_detections = [det for det in detections if det.conf.item() > 0.70]
+            logging.info(f"High confidence detections: {high_conf_detections}")
+
+            if high_conf_detections:
                 logging.info("High confidence detections found")
-                if hasattr(detections, 'class_name') and detections['class_name'] is not None:
-                    labels = [
-                        class_name.split()[0]  # Extract just the numeric part
-                        for class_name in detections['class_name']
-                    ]
-                else:
-                    logging.warning("No 'class_name' in detections or 'class_name' is None")
-                    labels = []
+                labels = [self.model.names[int(det.cls.item())] for det in high_conf_detections]
+                numeric_values = [int(label.split()[0]) for label in labels]
+                self.release_resources()
+                return jsonify({"message": "High confidence detections found", "data": numeric_values}), 200
+            
 
-                self.release_resources()
-                return jsonify({"message": "High confidence detections found", "data": labels}), 200
-            else:
-                logging.info("No high confidence detections found")
-                self.release_resources()
-                return jsonify({"message": "No high confidence detections found"}), 200
-                
-                                
+                               
 
     def release_resources(self):
         if self.cap and self.cap.isOpened():
