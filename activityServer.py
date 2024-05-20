@@ -165,25 +165,25 @@ def question():
         price_array = [100,1000,5000,500,200,3000,1200]
         x7=random.choice(price_array)
         result7=x7/2
-        q7="There is a concession of Rs. "+str(x7)+". How much money will he have left when he gives half of the money to his friend?"
+        q7="There is a concession of Rupees. "+str(x7)+". How much money will he have left when he gives half of the money to his friend?"
         
         price_array = [1000,5000,3000,1200]
         x8=random.choice(price_array)
         price_array = [200,100,400,800,600]
         y8=random.choice(price_array)
         result8=x8-y8
-        q8="Saduni has Rs. "+str(x8)+". When she gives "+str(y8)+" rupees to Sachini, how much money does she have left?"
+        q8="Saduni has Rupees. "+str(x8)+". When she gives "+str(y8)+" rupees to Sachini, how much money does she have left?"
 
         x9,y9=random_data3()
         result9=x9/y9
-        q9="Amal has Rs."+str(x9)+". If that amount is divided equally among "+str(y9)+" people, how much will each person get?"
+        q9="Amal has Rupees."+str(x9)+". If that amount is divided equally among "+str(y9)+" people, how much will each person get?"
 
         price_array = [2000,1500,3000,2500]
         x10=random.choice(price_array)
         price_array = [1200,500,800,1000]
         y10=random.choice(price_array)
         result10=x10-y10
-        q10="Kasun has Rs. "+str(x10)+". If Kasun spent "+str(y10)+" rupees out of that amount, what is the remaining amount?"
+        q10="Kasun has Rupees. "+str(x10)+". If Kasun spent "+str(y10)+" rupees out of that amount, what is the remaining amount?"
 
         q_number=random.choice([5,10,4,6,9,7,8])
         print(q_number)
