@@ -53,7 +53,7 @@ class ActivityServer:
 
     def initialize_resources(self):
         self.cap = cv2.VideoCapture(0)
-        self.model = YOLO("models/money_ncnn_model")
+        self.model = YOLO("models/money.pt")
         logging.info("Detection resources initialized")
 
     def detect(self):
