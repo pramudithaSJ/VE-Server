@@ -58,23 +58,38 @@ class ActivityServer:
 
     def detect(self):
         self.initialize_resources()
-      # Set a high confidence threshold
+        logging.info("Starting detection")
 
         while True:
             success, frame = self.cap.read()
-            if success:
-                results = self.yolo(frame)[0]
-                detections = sv.Detections.from_ultralytics(results)
-                detections = detections[detections.confidence > 0.70]
+            if not success:
+                logging.error("Failed to read frame from camera")
+                self.release_resources()
+                return jsonify({"message": "Failed to read frame from camera"}), 500
 
-                if len(detections) > 0:
-                    print(detections)
+            results = self.yolo(frame)[0]
+            logging.info(f"YOLO results: {results}")
+            detections = sv.Detections.from_ultralytics(results)
+            logging.info(f"Detections: {detections}")
+            detections = detections[detections.confidence > 0.70]
+
+            if len(detections) > 0:
+                logging.info("High confidence detections found")
+                if hasattr(detections, 'class_name') and detections['class_name'] is not None:
                     labels = [
                         class_name.split()[0]  # Extract just the numeric part
                         for class_name in detections['class_name']
                     ]
-                    self.release_resources()
-                    return jsonify({"message": "High confidence detections found","data":labels}), 200
+                else:
+                    logging.warning("No 'class_name' in detections or 'class_name' is None")
+                    labels = []
+
+                self.release_resources()
+                return jsonify({"message": "High confidence detections found", "data": labels}), 200
+            else:
+                logging.info("No high confidence detections found")
+                self.release_resources()
+                return jsonify({"message": "No high confidence detections found"}), 200
                 
                                 
 
