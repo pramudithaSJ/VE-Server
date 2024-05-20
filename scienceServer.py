@@ -47,7 +47,7 @@ class ScienceDetectionServer:
             detections = sv.Detections.from_ultralytics(results)  # Modify as needed
             detections = detections[detections.confidence > 0.3]
             print(detections)
-            if  0 <len(detections) == 1:
+            if  len(detections) == 1:
                     labels = [
                             f"{class_name} {confidence:.2f}"
                             for class_name, confidence

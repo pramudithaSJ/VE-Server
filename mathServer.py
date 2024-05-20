@@ -33,7 +33,7 @@ class MathDetectionServer:
 
     def initialize_resources(self):
         self.cap = cv2.VideoCapture(0)
-        self.yolo = YOLO("models/math-model.pt")
+        self.yolo = YOLO("models/cl4ep80.pt")
         logging.info("Detection resources initialized")
 
     def detect(self):
@@ -45,15 +45,10 @@ class MathDetectionServer:
             detections = detections[detections.confidence > 0.80]
             print(detections)
             if len(detections) == 1:
-                    labels = ""
-                    if detections[detections.class_id == 0]:
-                        labels = "circle"
-                    elif detections[detections.class_id == 1]:
-                        labels = "cube"
-                    elif detections[detections.class_id == 2]:
-                        labels = "cylinder"
-                    elif detections[detections.class_id == 3]:
-                        labels = "triangle"
+                    labels = [
+                            f"{class_name} {confidence:.2f}"
+                            for class_name, confidence
+                            in zip(detections['class_name'], detections.confidence)]
                     
                     detection_message = {"type": "detection", "message": "Object detected!", "detections": labels }
                     self.server.send_message(self.client, json.dumps(detection_message))
