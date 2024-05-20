@@ -49,7 +49,7 @@ class ScienceDetectionServer:
             logging.info(f"YOLO results: {results}")
 
             detections = results[0].boxes
-            high_conf_detections = [det for det in detections if det.conf.item() > 0.60]
+            high_conf_detections = [det for det in detections if det.conf.item() > 0.01]
             logging.info(f"High confidence detections: {high_conf_detections}")
 
             if high_conf_detections:
