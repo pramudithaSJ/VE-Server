@@ -1,0 +1,23 @@
+description: Ultralytics money model trained on /content/Money5-1/data.yaml
+author: Ultralytics
+date: '2024-05-20T16:35:31.074740'
+version: 8.2.10
+license: AGPL-3.0 License (https://ultralytics.com/license)
+docs: https://docs.ultralytics.com
+stride: 32
+task: detect
+batch: 1
+imgsz:
+- 640
+- 640
+names:
+  0: 1 ruppees
+  1: 10 ruppees
+  2: 100 ruppees
+  3: 1000 ruppees
+  4: 2 ruppees
+  5: 20 ruppees
+  6: 5 ruppees
+  7: 50 ruppees
+  8: 500 ruppees
+  9: 5000 ruppees

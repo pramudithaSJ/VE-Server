@@ -53,7 +53,7 @@ class ActivityServer:
 
     def initialize_resources(self):
         self.cap = cv2.VideoCapture(0)
-        self.model = YOLO("models/money.pt")
+        self.model = YOLO("models/money_ncnn_model")
         logging.info("Detection resources initialized")
 
     def detect(self):
@@ -71,7 +71,7 @@ class ActivityServer:
             logging.info(f"YOLO results: {results}")
 
             detections = results[0].boxes
-            high_conf_detections = [det for det in detections if det.conf.item() > 0.70]
+            high_conf_detections = [det for det in detections if det.conf.item() > 0.60]
             logging.info(f"High confidence detections: {high_conf_detections}")
 
             if high_conf_detections:
