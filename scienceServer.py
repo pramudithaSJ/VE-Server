@@ -35,28 +35,31 @@ class ScienceDetectionServer:
 
     def initialize_resources(self):
         self.cap = cv2.VideoCapture(0)
-        self.yolo = YOLO("models/best65.pt")
+        self.model = YOLO("models/best65.pt")
         logging.info("Detection resources initialized")
 
     def detect(self):
-     
      while self.active:
-        success, frame = self.cap.read()
-        if success:
-            results = self.yolo(frame)[0]
-            detections = sv.Detections.from_ultralytics(results)  # Modify as needed
-            detections = detections[detections.confidence > 0.3]
-            print(detections)
-            if  len(detections) == 1:
-                    labels = [
-                            f"{class_name} {confidence:.2f}"
-                            for class_name, confidence
-                            in zip(detections['class_name'], detections.confidence)
-]
-                    detection_message = {"type": "detection", "message": "Object detected!", "detections": labels}
-                    self.server.send_message(self.client, json.dumps(detection_message))
-                    self.active = False  # Set active to False to stop detection
-                    break  # Exit the loop to end the thread
+            success, frame = self.cap.read()
+            if not success:
+                logging.error("Failed to read frame from camera")
+                self.release_resources()
+
+            results = self.model(frame)
+            logging.info(f"YOLO results: {results}")
+
+            detections = results[0].boxes
+            high_conf_detections = [det for det in detections if det.conf.item() > 0.60]
+            logging.info(f"High confidence detections: {high_conf_detections}")
+
+            if high_conf_detections:
+                logging.info("High confidence detections found")
+                labels = [self.model.names[int(det.cls.item())] for det in high_conf_detections]
+                detection_message = {"type": "detection", "message": "Object detected!", "detections": labels}
+                self.server.send_message(self.client, json.dumps(detection_message))
+                self.active = False
+                self.release_resources()
+                self.stop_detection()
 
      self.release_resources()
 
